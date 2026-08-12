@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SUPER ADMIN CONTROL</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#05060a;color:#fff;font-family:Arial,sans-serif}
+.rgb{background:linear-gradient(90deg,#ff0080,#8b5cf6,#00e5ff,#00ffa2,#ff0080);background-size:400% 100%;animation:rgb 5s linear infinite}
+@keyframes rgb{0%{background-position:0}100%{background-position:400%}}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 10% 10%,#ff008020,transparent 30%),radial-gradient(circle at 90% 90%,#00e5ff20,transparent 30%),#05060a}
+.login-box{width:410px;padding:38px;background:#0b0d12;border-radius:24px;position:relative}
+.login-box:before{content:"";position:absolute;inset:-2px;border-radius:26px;background:linear-gradient(90deg,#ff0080,#8b5cf6,#00e5ff,#00ffa2,#ff0080);background-size:400%;animation:rgb 5s linear infinite;z-index:-1}
+.login-box h1{text-align:center;font-size:27px}.sub{text-align:center;color:#737985;font-size:11px;margin:8px 0 28px}
+input,select{width:100%;height:48px;margin:7px 0 16px;padding:0 13px;border-radius:10px;border:1px solid #252a33;background:#07090d;color:#fff;outline:none}
+input:focus,select:focus{border-color:#00e5ff}label{font-size:9px;color:#9299a5;font-weight:bold}button{cursor:pointer}
+.login-btn,.generate{width:100%;height:50px;border:0;border-radius:10px;color:#fff;font-weight:bold}
+#error{display:none;text-align:center;color:#ff5870;font-size:10px;margin-top:12px}
+#panel{display:none;min-height:100vh}header{height:68px;display:flex;align-items:center;padding:0 20px;background:#090b10;border-bottom:1px solid #20242d}
+.menu{width:40px;height:40px;border:1px solid #292e38;border-radius:10px;background:#10131a;color:#fff;font-size:19px}.logo{margin-left:14px;font-weight:bold}.admin{margin-left:auto;font-size:11px}
+.sidebar{position:fixed;top:0;left:-260px;width:250px;height:100vh;padding:25px 15px;background:#090b10;border-right:1px solid #20242d;z-index:20;transition:.25s}.sidebar.open{left:0}
+.nav{padding:14px;margin:5px 0;border-radius:9px;color:#858c98;font-size:11px;cursor:pointer}.nav:hover,.nav.active{color:#fff;background:#151922}
+main{max-width:1100px;margin:auto;padding:25px}.page{display:none}.page.active{display:block}.card{background:#0c0e14;border:1px solid #20242d;border-radius:16px;padding:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.full{grid-column:1/-1}.result{display:none;margin-top:18px;padding:15px;border:1px solid #252a33;border-radius:10px}.key{color:#00e5ff;font-family:monospace;margin-top:8px;word-break:break-all}
+table{width:100%;border-collapse:collapse;min-width:750px}th,td{padding:13px 8px;text-align:left;border-bottom:1px solid #191d25;font-size:10px}th{color:#656d78}.table-wrap{overflow:auto}.copy{background:#151820;color:#fff;border:1px solid #292e38;border-radius:7px;padding:7px 10px}
+.badge{padding:5px 8px;border-radius:6px;font-size:9px}.active-badge{background:#0b3d2e;color:#31f0b0}.expired-badge{background:#3d1018;color:#ff6b7d}
+.toast{position:fixed;right:18px;bottom:18px;padding:12px 16px;background:#11151d;border:1px solid #303743;border-radius:10px;font-size:11px;display:none;z-index:99}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}main{padding:15px}.login-box{width:100%}}
+</style>
+</head>
+<body>
+
+<section id="login">
+<div class="login-box">
+<h1>SUPER USER</h1>
+<div class="sub">PREMIUM SECURE CONTROL PANEL</div>
+<label>ADMIN EMAIL</label>
+<input id="adminEmail" type="email" placeholder="Firebase admin email">
+<label>PASSWORD</label>
+<input id="adminPass" type="password" placeholder="Enter password">
+<button class="login-btn rgb" onclick="adminLogin()">ENTER ADMIN PANEL</button>
+<div id="error"></div>
+</div>
+</section>
+
+<section id="panel">
+<header><button class="menu" onclick="toggleMenu()">☰</button><div class="logo">ADMIN CONTROL</div><div class="admin" id="adminLabel">ADMIN AK4SH ✓</div></header>
+<aside id="sidebar" class="sidebar">
+<div class="nav active" onclick="showPage('generator',this)">🔑 Key Generator</div>
+<div class="nav" onclick="showPage('history',this)">📜 Key History</div>
+<div class="nav" onclick="showPage('devices',this)">📱 Registered Devices</div>
+<div class="nav" onclick="showPage('profile',this)">👤 Profile</div>
+<div class="nav" onclick="logout()">↪ Logout</div>
+</aside>
+
+<main>
+<section id="generator" class="page active"><div class="card">
+<h2>Key Generator</h2><p style="color:#777;font-size:10px;margin:8px 0 20px">Create keys with device limits and expiry.</p>
+<div class="grid">
+<div class="full"><label>KEY PREFIX</label><input id="prefix" placeholder="Example: VIP"></div>
+<div><label>KEY NAME</label><input id="keyName" placeholder="Premium Key"></div>
+<div><label>DEVICE LIMIT</label><select id="deviceLimit"><option value="1">1 Device</option><option value="2">2 Devices</option><option value="3">3 Devices</option><option value="5">5 Devices</option><option value="10">10 Devices</option><option value="20">20 Devices</option><option value="50">50 Devices</option><option value="100">100 Devices</option></select></div>
+<div><label>VALIDITY</label><select id="validity"><option value="3600000">1 Hour</option><option value="21600000">6 Hours</option><option value="86400000">1 Day</option><option value="604800000">7 Days</option><option value="2592000000">30 Days</option><option value="7776000000">90 Days</option><option value="31536000000">1 Year</option></select></div>
+<div><label>DEVICE MODE</label><select id="deviceMode"><option value="limit">Device Limit</option><option value="single">Single Device</option></select></div>
+</div>
+<button class="generate rgb" onclick="generateKey()">GENERATE SECURE KEY</button>
+<div id="result" class="result"><div style="font-size:9px;color:#777">GENERATED KEY</div><div id="newKey" class="key"></div><button class="copy" onclick="copyKey()">COPY KEY</button></div>
+</div></section>
+
+<section id="history" class="page"><div class="card"><h2>Key History</h2><div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>KEY</th><th>LIMIT</th><th>USED</th><th>EXPIRY</th><th>STATUS</th></tr></thead><tbody id="historyTable"></tbody></table></div></div></section>
+
+<section id="devices" class="page"><div class="card"><h2>Registered Devices</h2><p style="color:#777;font-size:10px;margin-top:8px">Devices registered against generated keys.</p><div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>KEY</th><th>DEVICE ID</th><th>REGISTERED</th></tr></thead><tbody id="deviceTable"></tbody></table></div></div></section>
+
+<section id="profile" class="page"><div class="card"><h2>Admin Profile</h2><label style="display:block;margin-top:20px">ADMIN NAME</label><input id="profileName" value="ADMIN AK4SH"><label>PANEL TITLE</label><input id="profileTitle" value="ADMIN CONTROL"><button class="generate rgb" onclick="saveProfile()">SAVE PROFILE</button></div></section>
+</main></section>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {getDatabase,ref,set,get} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyCJ1BQZNZduyZIUrX42iaxZ5fAR56v0aPE",
+authDomain:"admin-panel-86f08.firebaseapp.com",
+databaseURL:"https://admin-panel-86f08-default-rtdb.firebaseio.com",
+projectId:"admin-panel-86f08",
+storageBucket:"admin-panel-86f08.firebasestorage.app",
+messagingSenderId:"730205526516",
+appId:"1:730205526516:web:db6727f42678f3c31041a1",
+measurementId:"G-WGEHLLBTCZ"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getDatabase(app);
+let currentKey="";
+
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2500)}
+
+window.adminLogin=async()=>{
+const email=document.getElementById("adminEmail").value.trim(),pass=document.getElementById("adminPass").value,error=document.getElementById("error");
+if(!email||!pass){error.textContent="Email aur password enter karo.";error.style.display="block";return}
+try{await signInWithEmailAndPassword(auth,email,pass);error.style.display="none";toast("Login successful!")}catch(e){error.textContent="Login failed: "+e.code;error.style.display="block"}
+};
+
+onAuthStateChanged(auth,user=>{
+document.getElementById("login").style.display=user?"none":"flex";
+document.getElementById("panel").style.display=user?"block":"none";
+if(user){loadHistory();loadDevices()}
+});
+
+window.toggleMenu=()=>document.getElementById("sidebar").classList.toggle("open");
+window.showPage=(id,el)=>{
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));
+if(el)el.classList.add("active");
+document.getElementById("sidebar").classList.remove("open");
+if(id==="history")loadHistory();if(id==="devices")loadDevices();
+};
+
+function randomString(n){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<n;i++)s+=chars[Math.floor(Math.random()*chars.length)];return s}
+
+window.generateKey=async()=>{
+if(!auth.currentUser){toast("Login required.");return}
+const prefix=document.getElementById("prefix").value.trim().toUpperCase();
+const name=document.getElementById("keyName").value.trim()||"Premium Key";
+let limit=Number(document.getElementById("deviceLimit").value);
+if(document.getElementById("deviceMode").value==="single")limit=1;
+const validity=Number(document.getElementById("validity").value);
+const key=(prefix?prefix+"-":"")+randomString(6)+"-"+randomString(6)+"-"+randomString(6);
+const now=Date.now();
+const data={key,name,deviceLimit:limit,expiresAt:now+validity,createdAt:now,createdBy:auth.currentUser.uid,devices:{}};
+try{
+await set(ref(db,"keys/"+key),data);
+currentKey=key;document.getElementById("newKey").textContent=key;document.getElementById("result").style.display="block";
+toast("Key generated successfully!");loadHistory();
+}catch(e){toast("Firebase database error: "+e.code)}
+};
+
+window.copyKey=()=>{if(currentKey)navigator.clipboard.writeText(currentKey).then(()=>toast("Key copied!"))};
+
+async function loadHistory(){
+try{
+const snap=await get(ref(db,"keys")),table=document.getElementById("historyTable");table.innerHTML="";
+if(!snap.exists()){table.innerHTML="<tr><td colspan='5'>No keys generated.</td></tr>";return}
+Object.values(snap.val()).sort((a,b)=>b.createdAt-a.createdAt).forEach(k=>{
+const used=k.devices?Object.keys(k.devices).length:0,expired=Date.now()>Number(k.expiresAt),tr=document.createElement("tr");
+tr.innerHTML=`<td style="color:#00e5ff;font-family:monospace">${safe(k.key)}</td><td>${k.deviceLimit}</td><td>${used}/${k.deviceLimit}</td><td>${new Date(k.expiresAt).toLocaleString()}</td><td><span class="badge ${expired?"expired-badge":"active-badge"}">${expired?"EXPIRED":"ACTIVE"}</span></td>`;
+table.appendChild(tr);
+});
+}catch(e){console.error(e)}
+}
+
+async function loadDevices(){
+try{
+const snap=await get(ref(db,"keys")),table=document.getElementById("deviceTable");table.innerHTML="";
+if(!snap.exists())return;
+Object.values(snap.val()).forEach(k=>{
+if(!k.devices)return;
+Object.entries(k.devices).forEach(([id,d])=>{
+const tr=document.createElement("tr");
+tr.innerHTML=`<td style="color:#00e5ff">${safe(k.key)}</td><td>${safe(id)}</td><td>${d.registeredAt?new Date(d.registeredAt).toLocaleString():"-"}</td>`;
+table.appendChild(tr);
+});
+});
+}catch(e){console.error(e)}
+}
+
+window.saveProfile=()=>{const p={name:document.getElementById("profileName").value,title:document.getElementById("profileTitle").value};localStorage.setItem("adminProfile",JSON.stringify(p));document.getElementById("adminLabel").textContent=p.name+" ✓";document.querySelector(".logo").textContent=p.title;toast("Profile saved!")};
+window.logout=()=>signOut(auth);
+function safe(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+</script>
+</body>
+</html>
