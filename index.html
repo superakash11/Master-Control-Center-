@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SUPER ADMIN CONTROL</title>
+<title>SUPER USER CENTER</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;background:#05060a;color:#fff;font-family:Arial,sans-serif}
@@ -36,9 +36,9 @@ table{width:100%;border-collapse:collapse;min-width:750px}th,td{padding:13px 8px
 <h1>SUPER USER</h1>
 <div class="sub">PREMIUM SECURE CONTROL PANEL</div>
 <label>BOSS KA EMAIL</label>
-<input id="adminEmail" type="email" placeholder="Firebase admin email">
+<input id="adminEmail" type="email" placeholder="SIR ENTER KARO">
 <label>ACCESS TOKEN</label>
-<input id="adminPass" type="password" placeholder="Enter password">
+<input id="adminPass" type="password" placeholder="ENTER ACCESS KEY">
 <button class="login-btn rgb" onclick="adminLogin()">ENTER KARO BOSS</button>
 <div id="error"></div>
 </div>
@@ -51,7 +51,7 @@ table{width:100%;border-collapse:collapse;min-width:750px}th,td{padding:13px 8px
 <div class="nav" onclick="showPage('history',this)">📜 Key History</div>
 <div class="nav" onclick="showPage('devices',this)">📱 Registered Devices</div>
 <div class="nav" onclick="showPage('profile',this)">👤 Profile</div>
-<div class="nav" onclick="logout()">↪ Logout</div>
+<div class="nav" onclick="logout('profile',this)">⚙️ Logout</div>
 </aside>
 
 <main>
@@ -64,8 +64,8 @@ table{width:100%;border-collapse:collapse;min-width:750px}th,td{padding:13px 8px
 <div><label>VALIDITY</label><select id="validity"><option value="3600000">1 Hour</option><option value="21600000">6 Hours</option><option value="86400000">1 Day</option><option value="604800000">7 Days</option><option value="2592000000">30 Days</option><option value="7776000000">90 Days</option><option value="31536000000">1 Year</option></select></div>
 <div><label>DEVICE MODE</label><select id="deviceMode"><option value="limit">Device Limit</option><option value="single">Single Device</option></select></div>
 </div>
-<button class="generate rgb" onclick="generateKey()">GENERATE SECURE KEY</button>
-<div id="result" class="result"><div style="font-size:9px;color:#777">GENERATED KEY</div><div id="newKey" class="key"></div><button class="copy" onclick="copyKey()">COPY KEY</button></div>
+<button class="generate rgb" onclick="generateKey()">GENERATE ACCESS KEY</button>
+<div id="result" class="result"><div style="font-size:9px;color:#777">GENERATE ACCESS KEY</div><div id="newKey" class="key"></div><button class="copy" onclick="copyKey()">COPY KEY</button></div>
 </div></section>
 
 <section id="history" class="page"><div class="card"><h2>Key History</h2><div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>KEY</th><th>LIMIT</th><th>USED</th><th>EXPIRY</th><th>STATUS</th></tr></thead><tbody id="historyTable"></tbody></table></div></div></section>
