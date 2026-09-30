@@ -190,6 +190,13 @@ background:var(--goldgrad);background-size:300% 100%;animation:rgb 6s linear inf
 input:focus,select:focus{border-color:#8b7dff;box-shadow:0 0 0 3px #8b7dff28}
 .sidebar{border-right-color:#2a2f4a}
 .toast{border-color:#8b7dff}
+/* MUSIC PLAYER */
+.player{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;max-width:calc(100vw - 32px);border-radius:999px;background:#0a0c15ee;border:1px solid #2a2f4a;backdrop-filter:blur(12px);box-shadow:0 10px 35px #000a}
+.player button{border:0;color:#fff;font-weight:800}
+.p-play{width:40px;height:40px;border-radius:50%;font-size:15px;flex:none}
+.p-file{width:32px;height:32px;border-radius:50%;background:#171b2e;font-size:14px;flex:none}
+.p-name{font-size:12px;font-weight:700;max-width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player input[type=range]{width:70px;height:4px;margin:0;padding:0;border:0;background:#2a2f4a;accent-color:#8b7dff}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -309,6 +316,15 @@ input:focus,select:focus{border-color:#8b7dff;box-shadow:0 0 0 3px #8b7dff28}
 </main>
 </section>
 
+<audio id="bgAudio" src="song.mp3" loop preload="auto"></audio>
+<div class="player">
+<button id="musicBtn" class="p-play gold-btn" onclick="toggleMusic()" aria-label="Play or pause music">▶</button>
+<span id="musicName" class="p-name">song.mp3</span>
+<input type="range" min="0" max="100" value="50" oninput="setVolume(this.value)" aria-label="Volume">
+<button class="p-file" onclick="document.getElementById('songFile').click()" aria-label="Choose song" title="Choose song">📂</button>
+<input id="songFile" type="file" accept="audio/*" hidden onchange="pickSong(event)">
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script type="module">
@@ -339,8 +355,27 @@ const t=$("toast");t.textContent=msg;t.style.display="block";
 setTimeout(()=>{t.style.display="none"},2500);
 }
 
+/* MUSIC */
+const audio=$("bgAudio");
+audio.volume=.5;
+const syncMusic=()=>{$("musicBtn").textContent=audio.paused?"▶":"⏸";};
+audio.onplay=audio.onpause=syncMusic;
+window.toggleMusic=()=>{
+if(audio.paused)audio.play().catch(()=>toast("song.mp3 nahi mila. 📂 se gana choose karo."));
+else audio.pause();
+};
+window.setVolume=v=>{audio.volume=v/100;};
+window.pickSong=e=>{
+const f=e.target.files[0];
+if(!f)return;
+audio.src=URL.createObjectURL(f);
+$("musicName").textContent=f.name.replace(/\.[^.]+$/,"");
+audio.play().catch(()=>{});
+};
+
 /* LOGIN */
 window.adminLogin=async()=>{
+if(audio.paused)audio.play().catch(()=>{});
 const email=$("adminEmail").value.trim();
 const pass=$("adminPass").value;
 const error=$("error");
