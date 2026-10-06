@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SᴜᴘᴇʀAᴋᴀsʜOғᴄ • Admin Center</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#060a08;--panel:#0d1411;--panel2:#121b17;--line:#22302a;
+--text:#f3efe3;--muted:#8d9a93;
+--gold:#d9b25a;--gold2:#f4dc9a;--gold3:#9a7424;
+--green:#2fd39a;--red:#ff6b73;
+--goldgrad:linear-gradient(135deg,#f4dc9a 0%,#d9b25a 45%,#9a7424 100%)
+}
+
+body{
+min-height:100vh;color:var(--text);font-family:Manrope,Arial,sans-serif;
+background:
+radial-gradient(circle at 12% 0%,#d9b25a14,transparent 30%),
+radial-gradient(circle at 95% 90%,#2fd39a10,transparent 32%),var(--bg)
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+:focus-visible{
+outline:2px solid var(--gold);
+outline-offset:2px
+}
+
+.gold-btn{
+background:var(--goldgrad);
+color:#1a1205;
+border:0;
+font-weight:800;
+transition:filter .2s,transform .15s
+}
+
+.gold-btn:hover{filter:brightness(1.08)}
+.gold-btn:active{transform:translateY(1px)}
+
+/* LOGIN */
+
+#login{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:22px
+}
+
+.login-box{
+width:430px;
+padding:36px 32px;
+border-radius:26px;
+position:relative;
+overflow:hidden;
+background:linear-gradient(160deg,#121b17,#080d0b);
+border:1px solid #3a3020;
+box-shadow:0 30px 90px #000,0 0 0 1px #d9b25a14 inset
+}
+
+.login-box:before{
+content:"";
+position:absolute;
+left:0;
+right:0;
+top:0;
+height:3px;
+background:var(--goldgrad)
+}
+
+.login-logo{
+width:128px;
+height:128px;
+display:block;
+margin:0 auto 20px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid var(--gold);
+box-shadow:0 0 0 6px #d9b25a14,0 10px 40px #d9b25a30
+}
+
+.brand{
+text-align:center;
+font-family:Fraunces,Georgia,serif;
+font-size:26px;
+font-weight:700;
+background:var(--goldgrad);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent
+}
+
+.verified{
+display:inline-flex;
+width:22px;
+height:22px;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:var(--goldgrad);
+color:#1a1205;
+font-size:13px;
+font-weight:800;
+vertical-align:3px;
+margin-left:5px;
+-webkit-text-fill-color:#1a1205
+}
+
+.sub{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+margin:8px 0 28px
+}
+
+label{
+font-size:12px;
+color:#b4bdb7;
+font-weight:700
+}
+
+input,select{
+width:100%;
+height:48px;
+margin:7px 0 16px;
+padding:0 14px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#070c0a;
+color:var(--text);
+outline:none;
+transition:border-color .2s,box-shadow .2s
+}
+
+input:focus,select:focus{
+border-color:var(--gold);
+box-shadow:0 0 0 3px #d9b25a1c
+}
+
+.login-btn,.generate{
+width:100%;
+height:50px;
+border-radius:12px;
+font-size:15px;
+box-shadow:0 10px 30px #d9b25a22
+}
+
+#error{
+display:none;
+text-align:center;
+color:var(--red);
+font-size:12px;
+margin-top:12px
+}
+
+/* SHELL */
+
+#panel{
+display:none;
+min-height:100vh
+}
+
+header{
+height:68px;
+display:flex;
+align-items:center;
+padding:0 20px;
+position:sticky;
+top:0;
+z-index:15;
+background:#060a08ee;
+border-bottom:1px solid var(--line);
+backdrop-filter:blur(14px)
+}
+
+.menu{
+width:42px;
+height:42px;
+border:1px solid var(--line);
+border-radius:12px;
+background:var(--panel);
+color:var(--gold2);
+font-size:19px
+}
+
+.logo{
+margin-left:14px;
+font-family:Fraunces,Georgia,serif;
+font-weight:700;
+color:var(--gold2)
+}
+
+.admin{
+margin-left:auto;
+font-size:12px;
+color:#c9d1cc;
+padding:7px 12px;
+border:1px solid var(--line);
+border-radius:999px;
+background:var(--panel)
+}
+
+.admin-dot{
+display:inline-block;
+width:7px;
+height:7px;
+border-radius:50%;
+background:var(--green);
+box-shadow:0 0 10px var(--green);
+margin-right:7px
+}
+
+.sidebar{
+position:fixed;
+top:0;
+left:-285px;
+width:270px;
+height:100vh;
+padding:22px 14px;
+z-index:30;
+background:#080d0bf8;
+border-right:1px solid #3a3020;
+transition:.25s;
+backdrop-filter:blur(18px)
+}
+
+.sidebar.open{left:0}
+
+.side-brand{
+padding:8px 10px 22px;
+font-family:Fraunces,Georgia,serif;
+font-weight:700;
+color:var(--gold2)
+}
+
+.side-brand small{
+display:block;
+font-family:Manrope,sans-serif;
+font-weight:500;
+color:var(--muted);
+font-size:11px;
+margin-top:5px
+}
+
+.nav{
+padding:14px;
+margin:5px 0;
+border-radius:12px;
+color:#a2aea7;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+border:1px solid transparent
+}
+
+.nav:hover,.nav.active{
+color:var(--gold2);
+background:linear-gradient(90deg,#d9b25a1c,#d9b25a06);
+border-color:#d9b25a40
+}
+
+main{
+max-width:1180px;
+margin:auto;
+padding:28px 26px
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.hero{
+display:flex;
+justify-content:space-between;
+gap:18px;
+align-items:center;
+margin-bottom:22px
+}
+
+.hero h1{
+font-family:Fraunces,Georgia,serif;
+font-size:32px;
+font-weight:700
+}
+
+.hero p{
+color:var(--muted);
+font-size:13px;
+margin-top:6px
+}
+
+.pill{
+border:1px solid #2fd39a44;
+background:#2fd39a12;
+padding:9px 14px;
+border-radius:999px;
+color:var(--green);
+font-size:12px;
+font-weight:700
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-bottom:18px
+}
+
+.stat{
+background:linear-gradient(160deg,var(--panel2),var(--panel));
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+position:relative;
+overflow:hidden
+}
+
+.stat:first-child{border-color:#d9b25a55}
+
+.stat:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+bottom:0;
+width:3px;
+background:var(--goldgrad)
+}
+
+.stat span{
+display:block;
+color:var(--muted);
+font-size:12px;
+font-weight:600
+}
+
+.stat b{
+display:block;
+font-family:Fraunces,Georgia,serif;
+font-size:30px;
+margin-top:6px;
+color:var(--gold2)
+}
+
+.stat i{
+font-style:normal;
+color:#6f7d76;
+font-size:11px
+}
+
+.card{
+background:linear-gradient(160deg,var(--panel2),var(--panel));
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px;
+box-shadow:0 15px 45px #0006
+}
+
+.card h2{
+font-family:Fraunces,Georgia,serif;
+font-size:21px;
+color:var(--gold2)
+}
+
+.card-desc{
+color:var(--muted);
+font-size:13px;
+margin:7px 0 22px
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:0 16px
+}
+
+.full{grid-column:1/-1}
+
+.result{
+display:none;
+margin-top:20px;
+padding:18px;
+border:1px solid #d9b25a66;
+border-radius:14px;
+background:#0a100d
+}
+
+.result .lbl{
+font-size:12px;
+color:var(--muted)
+}
+
+.key{
+color:var(--gold2);
+font-family:ui-monospace,Menlo,monospace;
+font-size:17px;
+margin:8px 0 14px;
+word-break:break-all
+}
+
+.copy{
+background:transparent;
+color:var(--gold2);
+border:1px solid var(--gold);
+border-radius:9px;
+padding:9px 14px;
+font-weight:700;
+font-size:12px
+}
+
+.copy:hover{background:#d9b25a1c}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:750px
+}
+
+th,td{
+padding:14px 10px;
+text-align:left;
+border-bottom:1px solid #1b2722;
+font-size:13px
+}
+
+th{
+color:var(--muted);
+font-weight:700;
+font-size:12px
+}
+
+.table-wrap{overflow:auto}
+
+.badge{
+padding:5px 10px;
+border-radius:999px;
+font-size:11px;
+font-weight:800
+}
+
+.active-badge{
+background:#2fd39a18;
+color:var(--green);
+border:1px solid #2fd39a44
+}
+
+.expired-badge{
+background:#ff6b7316;
+color:var(--red);
+border:1px solid #ff6b7344
+}
+
+.empty{
+text-align:center;
+color:#6f7d76;
+padding:28px
+}
+
+.toast{
+position:fixed;
+right:18px;
+bottom:18px;
+padding:13px 18px;
+background:#121b17;
+border:1px solid var(--gold);
+border-radius:12px;
+font-size:13px;
+font-weight:600;
+display:none;
+z-index:99;
+box-shadow:0 10px 35px #000a
+}
+
+.profile-grid{max-width:650px}
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:#000a;
+z-index:25
+}
+
+.overlay.show{display:block}
+
+@media(max-width:800px){
+.stats{grid-template-columns:1fr 1fr}
+.hero{
+align-items:flex-start;
+flex-direction:column
+}
+}
+
+@media(max-width:650px){
+.grid{grid-template-columns:1fr}
+.full{grid-column:auto}
+main{padding:16px}
+.login-box{
+width:100%;
+padding:30px 24px
+}
+.login-logo{
+width:108px;
+height:108px
+}
+.brand{font-size:22px}
+.hero h1{font-size:26px}
+}
+
+/* RGB THEME OVERRIDE */
+
+:root{
+--bg:#04050a;
+--panel:#0a0c15;
+--panel2:#0f1220;
+--line:#1f2438;
+--muted:#8a90a8;
+--gold:#8b7dff;
+--gold2:#eef0ff;
+--green:#2cf5a6;
+--goldgrad:linear-gradient(90deg,#ff2d55,#ff9f0a,#ffe600,#30e86e,#19d3ff,#3b6bff,#b43bff,#ff2d8a,#ff2d55)
+}
+
+body{
+background:
+radial-gradient(circle at 10% 0%,#3b6bff18,transparent 32%),
+radial-gradient(circle at 92% 88%,#ff2d8a14,transparent 32%),
+var(--bg)
+}
+
+.gold-btn,
+.login-box:before,
+.stat:before,
+.verified{
+background:var(--goldgrad);
+background-size:300% 100%;
+animation:rgb 6s linear infinite
+}
+
+@keyframes rgb{
+to{background-position:300% 0}
+}
+
+.gold-btn{
+color:#fff;
+text-shadow:0 1px 6px #000c;
+box-shadow:0 10px 32px #8b7dff30
+}
+
+.verified{
+color:#fff;
+-webkit-text-fill-color:#fff
+}
+
+.brand{
+background:var(--goldgrad);
+background-size:300% 100%;
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+animation:rgb 6s linear infinite
+}
+
+.logo,.side-brand,.card h2,.stat b{color:#fff}
+
+.login-box{
+border-color:#2a2f4a;
+background:linear-gradient(160deg,#10142a,#070911)
+}
+
+.login-logo{
+border:3px solid transparent;
+background:
+linear-gradient(#070911,#070911) padding-box,
+var(--goldgrad) border-box;
+background-size:auto,300% 100%;
+animation:rgb 6s linear infinite;
+box-shadow:0 10px 40px #3b6bff30
+}
+
+.stat:first-child,.result{border-color:#8b7dff66}
+
+.nav:hover,.nav.active{
+color:#fff;
+background:linear-gradient(90deg,#3b6bff26,#ff2d8a10);
+border-color:#8b7dff55
+}
+
+.pill{
+border-color:#2cf5a655;
+background:#2cf5a612
+}
+
+.copy{
+color:#fff;
+border-color:#8b7dff
+}
+
+.copy:hover{background:#8b7dff22}
+
+.key,td[style]{color:#7fe9ff!important}
+
+input:focus,select:focus{
+border-color:#8b7dff;
+box-shadow:0 0 0 3px #8b7dff28
+}
+
+.sidebar{border-right-color:#2a2f4a}
+.toast{border-color:#8b7dff}
+
+/* MUSIC PLAYER */
+
+.player{
+position:fixed;
+left:16px;
+bottom:16px;
+z-index:60;
+display:flex;
+align-items:center;
+gap:10px;
+padding:8px 14px 8px 8px;
+max-width:calc(100vw - 32px);
+border-radius:999px;
+background:#0a0c15ee;
+border:1px solid #2a2f4a;
+backdrop-filter:blur(12px);
+box-shadow:0 10px 35px #000a
+}
+
+.player button{
+border:0;
+color:#fff;
+font-weight:800
+}
+
+.p-play{
+width:40px;
+height:40px;
+border-radius:50%;
+font-size:15px;
+flex:none
+}
+
+/* NEW: SONG CHANGE BUTTON */
+
+.p-next{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#171b2e;
+font-size:15px;
+flex:none;
+transition:.2s
+}
+
+.p-next:hover{
+background:#292e49;
+transform:scale(1.05)
+}
+
+.p-file{
+width:32px;
+height:32px;
+border-radius:50%;
+background:#171b2e;
+font-size:14px;
+flex:none
+}
+
+.p-name{
+font-size:12px;
+font-weight:700;
+max-width:110px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.player input[type=range]{
+width:70px;
+height:4px;
+margin:0;
+padding:0;
+border:0;
+background:#2a2f4a;
+accent-color:#8b7dff
+}
+
+@media(prefers-reduced-motion:reduce){
+*{
+transition:none!important;
+animation:none!important
+}
+}
+</style>
+</head>
+
+<body>
+
+<section id="login">
+
+<div class="login-box">
+
+<img src="logo.png"
+alt="SᴜᴘᴇʀAᴋᴀsʜOғᴄ"
+class="login-logo"
+onerror="this.style.display='none'">
+
+<h1 class="brand">
+SᴜᴘᴇʀAᴋᴀsʜOғᴄ
+<span class="verified">✓</span>
+</h1>
+
+<div class="sub">Premium secure control panel</div>
+
+<label>Admin email</label>
+<input id="adminEmail" type="email" placeholder="Enter admin email">
+
+<label>Access token</label>
+<input id="adminPass" type="password" placeholder="Enter access key">
+
+<button class="login-btn gold-btn" onclick="adminLogin()">
+Click To Enter
+</button>
+
+<div id="error"></div>
+
+</div>
+</section>
+
+
+<section id="panel">
+
+<header>
+
+<button class="menu" onclick="toggleMenu()" aria-label="Menu">
+☰
+</button>
+
+<div class="logo">
+SᴜᴘᴇʀAᴋᴀsʜOғᴄ
+<span class="verified"
+style="width:17px;height:17px;font-size:10px;vertical-align:1px">
+✓
+</span>
+</div>
+
+<div class="admin">
+<span class="admin-dot"></span>
+<span id="adminLabel">ADMIN</span>
+</div>
+
+</header>
+
+
+<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+
+<aside id="sidebar" class="sidebar">
+
+<div class="side-brand">
+
+SᴜᴘᴇʀAᴋᴀsʜOғᴄ
+<span class="verified"
+style="width:17px;height:17px;font-size:10px">
+✓
+</span>
+
+<small>Premium admin center</small>
+
+</div>
+
+<div class="nav active"
+onclick="showPage('generator',this)">
+🔑 Generate keys
+</div>
+
+<div class="nav"
+onclick="showPage('history',this)">
+📜 Key history
+</div>
+
+<div class="nav"
+onclick="showPage('devices',this)">
+📱 Registered devices
+</div>
+
+<div class="nav"
+onclick="showPage('profile',this)">
+👤 Profile
+</div>
+
+<div class="nav"
+onclick="logout()">
+⎋ Logout
+</div>
+
+</aside>
+
+
+<main>
+
+<section id="generator" class="page active">
+
+<div class="hero">
+
+<div>
+<h1>Dashboard</h1>
+<p>Generate and manage premium access keys from one place.</p>
+</div>
+
+<div class="pill">
+● System online
+</div>
+
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+<span>Total keys</span>
+<b id="statTotal">0</b>
+<i>All generated keys</i>
+</div>
+
+<div class="stat">
+<span>Active keys</span>
+<b id="statActive">0</b>
+<i>Currently valid</i>
+</div>
+
+<div class="stat">
+<span>Expired</span>
+<b id="statExpired">0</b>
+<i>Validity ended</i>
+</div>
+
+<div class="stat">
+<span>Devices</span>
+<b id="statDevices">0</b>
+<i>Registered devices</i>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Generate access key</h2>
+
+<p class="card-desc">
+Create keys with custom device limits and expiry.
+</p>
+
+<div class="grid">
+
+<div class="full">
+
+<label>Key prefix</label>
+
+<input id="prefix"
+placeholder="Example: VIP">
+
+</div>
+
+
+<div class="full">
+
+<label>Key name</label>
+
+<input id="keyName"
+placeholder="Premium Key"
+value="Premium Key">
+
+</div>
+
+
+<div>
+
+<label>Device limit</label>
+
+<select id="deviceLimit">
+
+<option value="1">1 Device</option>
+<option value="2">2 Devices</option>
+<option value="3">3 Devices</option>
+<option value="5">5 Devices</option>
+<option value="10">10 Devices</option>
+<option value="20">20 Devices</option>
+<option value="50">50 Devices</option>
+<option value="1000">1000 Devices</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Validity</label>
+
+<select id="validity">
+
+<option value="3600000">1 Hour</option>
+<option value="21600000">6 Hours</option>
+<option value="86400000">1 Day</option>
+<option value="604800000">7 Days</option>
+<option value="2592000000">30 Days</option>
+<option value="7776000000">90 Days</option>
+<option value="31536000000">1 Year</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Device mode</label>
+
+<select id="deviceMode">
+
+<option value="limit">Device Limit</option>
+<option value="single">Single Device</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button class="generate gold-btn"
+onclick="generateKey()">
+Generate credentials
+</button>
+
+
+<div id="result" class="result">
+
+<div class="lbl">
+New access key
+</div>
+
+<div id="newKey" class="key"></div>
+
+<button class="copy" onclick="copyKey()">
+Copy key
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="history" class="page">
+
+<div class="card">
+
+<h2>Key history</h2>
+
+<p class="card-desc">
+Every generated key with live status, usage and expiry.
+</p>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Key</th>
+<th>Name</th>
+<th>Limit</th>
+<th>Used</th>
+<th>Expiry</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="historyTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="devices" class="page">
+
+<div class="card">
+
+<h2>Registered devices</h2>
+
+<p class="card-desc">
+Devices registered against generated keys.
+</p>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Key</th>
+<th>Device ID</th>
+<th>Registered</th>
+</tr>
+
+</thead>
+
+<tbody id="deviceTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="profile" class="page">
+
+<div class="card profile-grid">
+
+<h2>Admin profile</h2>
+
+<p class="card-desc">
+Update the local panel branding without changing Firebase configuration.
+</p>
+
+<label>Admin name</label>
+
+<input id="profileName"
+value="SᴜᴘᴇʀAᴋᴀsʜOғғɪᴄɪᴀʟ">
+
+<label>Panel title</label>
+
+<input id="profileTitle"
+value="PREMIUM ADMIN CENTER">
+
+<button class="generate gold-btn"
+onclick="saveProfile()">
+Save profile
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+</section>
+
+
+<!-- MUSIC -->
+
+<audio
+id="bgAudio"
+src="song.mp3"
+preload="auto">
+</audio>
+
+
+<div class="player">
+
+<!-- PLAY -->
+
+<button
+id="musicBtn"
+class="p-play gold-btn"
+onclick="toggleMusic()"
+aria-label="Play or pause music">
+▶
+</button>
+
+
+<!-- SONG NAME -->
+
+<span
+id="musicName"
+class="p-name">
+song.mp3
+</span>
+
+
+<!-- VOLUME -->
+
+<input
+type="range"
+min="0"
+max="100"
+value="50"
+oninput="setVolume(this.value)"
+aria-label="Volume">
+
+
+<!-- NEW SONG CHANGE BUTTON -->
+
+<button
+id="nextSongBtn"
+class="p-next"
+onclick="nextSong()"
+aria-label="Change song"
+title="Change song">
+⏭️
+</button>
+
+
+<!-- FILE PICKER -->
+
+<button
+class="p-file"
+onclick="document.getElementById('songFile').click()"
+aria-label="Choose song"
+title="Choose song">
+📂
+</button>
+
+<input
+id="songFile"
+type="file"
+accept="audio/*"
+hidden
+onchange="pickSong(event)">
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script type="module">
+
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+set,
+get
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+/* FIREBASE CONFIG — UNCHANGED */
+
+const firebaseConfig={
+
+apiKey:"AIzaSyCJ1BQZNZduyZIUrX42iaxZ5fAR56v0aPE",
+
+authDomain:"admin-panel-86f08.firebaseapp.com",
+
+databaseURL:"https://admin-panel-86f08-default-rtdb.firebaseio.com",
+
+projectId:"admin-panel-86f08",
+
+storageBucket:"admin-panel-86f08.firebasestorage.app",
+
+messagingSenderId:"730205526516",
+
+appId:"1:730205526516:web:db6727f42678f3c31041a1",
+
+measurementId:"G-WGEHLLBTCZ"
+
+};
+
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let currentKey="";
+
+const $=id=>document.getElementById(id);
+
+
+function toast(msg){
+
+const t=$("toast");
+
+t.textContent=msg;
+
+t.style.display="block";
+
+setTimeout(()=>{
+t.style.display="none"
+},2500);
+
+}
+
+
+/* =========================================
+   MUSIC PLAYER
+   ========================================= */
+
+/* TWO SONGS */
+
+const songs=[
+{
+name:"song.mp3",
+src:"song.mp3"
+},
+{
+name:"song2.mp3",
+src:"song2.mp3"
+}
+];
+
+
+/* CURRENT SONG */
+
+let currentSong=0;
+
+
+const audio=$("bgAudio");
+
+audio.volume=.5;
+
+
+/* UPDATE PLAY BUTTON */
+
+const syncMusic=()=>{
+
+$("musicBtn").textContent=
+audio.paused?"▶":"⏸";
+
+};
+
+
+/* PLAY / PAUSE EVENTS */
+
+audio.onplay=syncMusic;
+
+audio.onpause=syncMusic;
+
+
+/* PLAY / PAUSE */
+
+window.toggleMusic=()=>{
+
+if(audio.paused){
+
+audio.play().catch(()=>{
+
+toast("song.mp3 nahi mila. 📂 se gana choose karo.");
+
+});
+
+}else{
+
+audio.pause();
+
+}
+
+};
+
+
+/* =========================================
+   SONG CHANGE
+   ========================================= */
+
+window.nextSong=()=>{
+
+/*
+1st click:
+Song 1 → Song 2
+
+2nd click:
+Song 2 → Song 1
+*/
+
+currentSong++;
+
+if(currentSong>=songs.length){
+
+currentSong=0;
+
+}
+
+
+/* CHANGE AUDIO */
+
+audio.src=songs[currentSong].src;
+
+
+/* CHANGE NAME */
+
+$("musicName").textContent=
+songs[currentSong].name;
+
+
+/* PLAY NEW SONG */
+
+audio.play().catch(()=>{
+
+toast(songs[currentSong].name+" nahi mila.");
+
+});
+
+};
+
+
+/* =========================================
+   AUTO NEXT AFTER SONG ENDS
+   ========================================= */
+
+audio.onended=()=>{
+
+currentSong++;
+
+if(currentSong>=songs.length){
+
+currentSong=0;
+
+}
+
+audio.src=songs[currentSong].src;
+
+$("musicName").textContent=
+songs[currentSong].name;
+
+audio.play().catch(()=>{});
+
+};
+
+
+/* =========================================
+   VOLUME
+   ========================================= */
+
+window.setVolume=v=>{
+
+audio.volume=v/100;
+
+};
+
+
+/* =========================================
+   CUSTOM FILE PICKER
+   ========================================= */
+
+window.pickSong=e=>{
+
+const f=e.target.files[0];
+
+if(!f)return;
+
+
+/*
+Custom selected file ko
+current song ke roop mein play karega
+*/
+
+audio.src=URL.createObjectURL(f);
+
+$("musicName").textContent=
+f.name.replace(/\.[^.]+$/,"");
+
+
+audio.play().catch(()=>{});
+
+};
+
+
+/* =========================================
+   LOGIN
+   ========================================= */
+
+window.adminLogin=async()=>{
+
+if(audio.paused){
+
+audio.play().catch(()=>{});
+
+}
+
+const email=$("adminEmail").value.trim();
+
+const pass=$("adminPass").value;
+
+const error=$("error");
+
+
+if(!email||!pass){
+
+error.textContent=
+"Email aur password enter karo.";
+
+error.style.display="block";
+
+return;
+
+}
+
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+pass
+);
+
+error.style.display="none";
+
+toast("Login successful!");
+
+}catch(e){
+
+console.error(e);
+
+error.textContent=
+"Login failed: "+(e.code||"unknown-error");
+
+error.style.display="block";
+
+}
+
+};
+
+
+/* =========================================
+   AUTH STATE
+   ========================================= */
+
+onAuthStateChanged(auth,user=>{
+
+$("login").style.display=
+user?"none":"flex";
+
+$("panel").style.display=
+user?"block":"none";
+
+
+if(user){
+
+$("adminLabel").textContent=
+user.email||"ADMIN";
+
+loadProfile();
+
+loadHistory();
+
+loadDevices();
+
+}
+
+});
+
+
+/* =========================================
+   MENU
+   ========================================= */
+
+window.toggleMenu=()=>{
+
+$("sidebar").classList.toggle("open");
+
+$("overlay").classList.toggle("show");
+
+};
+
+
+/* =========================================
+   PAGE
+   ========================================= */
+
+window.showPage=(id,el)=>{
+
+document
+.querySelectorAll(".page")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+$(id).classList.add("active");
+
+
+document
+.querySelectorAll(".nav")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+
+if(el)
+el.classList.add("active");
+
+
+$("sidebar").classList.remove("open");
+
+$("overlay").classList.remove("show");
+
+
+if(id==="history")
+loadHistory();
+
+if(id==="devices")
+loadDevices();
+
+};
+
+
+/* =========================================
+   RANDOM KEY
+   ========================================= */
+
+function randomString(n){
+
+const chars=
+"ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+let s="";
+
+for(let i=0;i<n;i++)
+
+s+=chars[
+Math.floor(Math.random()*chars.length)
+];
+
+return s;
+
+}
+
+
+/* =========================================
+   GENERATE KEY
+   ========================================= */
+
+window.generateKey=async()=>{
+
+if(!auth.currentUser){
+
+toast("Login required.");
+
+return;
+
+}
+
+
+const prefix=
+$("prefix").value.trim().toUpperCase();
+
+
+const kn=$("keyName");
+
+
+const name=
+kn?
+kn.value.trim()||"Premium Key":
+"Premium Key";
+
+
+let limit=
+Number($("deviceLimit").value);
+
+
+if($("deviceMode").value==="single")
+
+limit=1;
+
+
+const validity=
+Number($("validity").value);
+
+
+const key=
+(prefix?prefix+"-":"")+
+randomString(6)+"-"+
+randomString(6)+"-"+
+randomString(6);
+
+
+const now=Date.now();
+
+
+const data={
+
+key:key,
+
+name:name,
+
+deviceLimit:limit,
+
+expiresAt:now+validity,
+
+createdAt:now,
+
+createdBy:auth.currentUser.uid,
+
+devices:{}
+
+};
+
+
+try{
+
+await set(
+ref(db,"keys/"+key),
+data
+);
+
+
+currentKey=key;
+
+
+$("newKey").textContent=key;
+
+$("result").style.display="block";
+
+
+toast("Key generated successfully!");
+
+loadHistory();
+
+
+}catch(e){
+
+console.error("Firebase error:",e);
+
+toast(
+"Firebase database error: "+
+(e.code||e.message||"unknown")
+);
+
+}
+
+};
+
+
+/* =========================================
+   COPY
+   ========================================= */
+
+window.copyKey=async()=>{
+
+if(!currentKey)return;
+
+
+try{
+
+await navigator.clipboard.writeText(currentKey);
+
+toast("Key copied!");
+
+}catch(e){
+
+const ta=document.createElement("textarea");
+
+ta.value=currentKey;
+
+ta.style.position="fixed";
+
+ta.style.opacity="0";
+
+document.body.appendChild(ta);
+
+ta.select();
+
+
+try{
+
+document.execCommand("copy");
+
+toast("Key copied!");
+
+}
+
+catch(err){
+
+toast("Copy failed.");
+
+}
+
+
+ta.remove();
+
+}
+
+};
+
+
+/* =========================================
+   HISTORY
+   ========================================= */
+
+async function loadHistory(){
+
+try{
+
+const snap=
+await get(ref(db,"keys"));
+
+
+const table=
+$("historyTable");
+
+
+table.innerHTML="";
+
+
+let total=0;
+
+let active=0;
+
+let expiredCount=0;
+
+let deviceTotal=0;
+
+
+if(!snap.exists()){
+
+table.innerHTML=
+"<tr><td colspan='6' class='empty'>No keys generated yet. Create your first key from the dashboard.</td></tr>";
+
+updateStats(0,0,0,0);
+
+return;
+
+}
+
+
+Object.values(snap.val())
+
+.sort(
+(a,b)=>
+Number(b.createdAt||0)-
+Number(a.createdAt||0)
+)
+
+.forEach(k=>{
+
+total++;
+
+
+const used=
+k.devices?
+Object.keys(k.devices).length:
+0;
+
+
+deviceTotal+=used;
+
+
+const expired=
+Date.now()>
+Number(k.expiresAt||0);
+
+
+if(expired)
+
+expiredCount++;
+
+else
+
+active++;
+
+
+const tr=
+document.createElement("tr");
+
+
+tr.innerHTML=`
+
+<td style="color:#f4dc9a;font-family:monospace">
+${safe(k.key)}
+</td>
+
+<td>
+${safe(k.name||"Premium Key")}
+</td>
+
+<td>
+${safe(k.deviceLimit)}
+</td>
+
+<td>
+${used}/${safe(k.deviceLimit)}
+</td>
+
+<td>
+${k.expiresAt?
+new Date(
+Number(k.expiresAt)
+).toLocaleString():
+"-"}
+</td>
+
+<td>
+<span class="badge ${
+expired?
+"expired-badge":
+"active-badge"
+}">
+${expired?"EXPIRED":"ACTIVE"}
+</span>
+</td>
+
+`;
+
+
+table.appendChild(tr);
+
+});
+
+
+updateStats(
+total,
+active,
+expiredCount,
+deviceTotal
+);
+
+
+}catch(e){
+
+console.error(
+"History load error:",
+e
+);
+
+}
+
+}
+
+
+/* =========================================
+   STATS
+   ========================================= */
+
+function updateStats(a,b,c,d){
+
+$("statTotal").textContent=a;
+
+$("statActive").textContent=b;
+
+$("statExpired").textContent=c;
+
+$("statDevices").textContent=d;
+
+}
+
+
+/* =========================================
+   DEVICES
+   ========================================= */
+
+async function loadDevices(){
+
+try{
+
+const snap=
+await get(ref(db,"keys"));
+
+
+const table=
+$("deviceTable");
+
+
+table.innerHTML="";
+
+
+if(!snap.exists()){
+
+table.innerHTML=
+"<tr><td colspan='3' class='empty'>No registered devices.</td></tr>";
+
+return;
+
+}
+
+
+let any=false;
+
+
+Object.values(snap.val())
+.forEach(k=>{
+
+if(!k.devices)return;
+
+
+Object.entries(k.devices)
+.forEach(([id,d])=>{
+
+any=true;
+
+
+const tr=
+document.createElement("tr");
+
+
+tr.innerHTML=`
+
+<td style="color:#f4dc9a">
+${safe(k.key)}
+</td>
+
+<td>
+${safe(id)}
+</td>
+
+<td>
+${
+d&&d.registeredAt?
+new Date(
+Number(d.registeredAt)
+).toLocaleString():
+"-"
+}
+</td>
+
+`;
+
+
+table.appendChild(tr);
+
+});
+
+});
+
+
+if(!any)
+
+table.innerHTML=
+"<tr><td colspan='3' class='empty'>No registered devices.</td></tr>";
+
+
+}catch(e){
+
+console.error(
+"Device load error:",
+e
+);
+
+}
+
+}
+
+
+/* =========================================
+   PROFILE
+   ========================================= */
+
+function loadProfile(){
+
+try{
+
+const raw=
+localStorage.getItem(
+"adminProfile"
+);
+
+
+if(!raw)return;
+
+
+const p=
+JSON.parse(raw);
+
+
+if(p.name){
+
+$("profileName").value=p.name;
+
+$("adminLabel").textContent=
+p.name;
+
+}
+
+
+if(p.title)
+
+$("profileTitle").value=
+p.title;
+
+
+}catch(e){
+
+console.error(
+"Profile load error:",
+e
+);
+
+}
+
+}
+
+
+window.saveProfile=()=>{
+
+const name=
+$("profileName").value.trim()||
+"SᴜᴘᴇʀAᴋᴀsʜOғғɪᴄɪᴀʟ";
+
+
+const title=
+$("profileTitle").value.trim()||
+"PREMIUM ADMIN CENTER";
+
+
+localStorage.setItem(
+"adminProfile",
+JSON.stringify({
+name:name,
+title:title
+})
+);
+
+
+$("adminLabel").textContent=name;
+
+
+toast("Profile saved!");
+
+};
+
+
+/* =========================================
+   LOGOUT
+   ========================================= */
+
+window.logout=()=>{
+
+signOut(auth);
+
+};
+
+
+/* =========================================
+   HTML SAFETY
+   ========================================= */
+
+function safe(v){
+
+return String(v??"")
+.replace(
+/[&<>"']/g,
+m=>
+({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
+
+}
+
+
+loadProfile();
+
+</script>
+
+</body>
+</html>
